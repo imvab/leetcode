@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         int[] res = new int[nums.length - k + 1];
