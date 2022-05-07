@@ -1,18 +1,19 @@
 class Solution {
-    ArrayList<TreeNode> traversal = new ArrayList<TreeNode>();
+    int sum = 0;
 
-    public void inOrder(TreeNode root) {
-        if (root != null) {
-            inOrder(root.left);
-            traversal.add(root);
-            inOrder(root.right);
-        }
+    public void helper(TreeNode child, TreeNode parent, TreeNode grandParent) {
+        if (child == null)
+            return;
+
+        if (grandParent != null && grandParent.val % 2 == 0)
+            sum += child.val;
+
+        helper(child.left, child, parent);
+        helper(child.right, child, parent);
     }
 
-    public int kthSmallest(TreeNode root, int k) {
-        inOrder(root);
-        return traversal.get(k - 1).val;
+    public int sumEvenGrandparent(TreeNode root) {
+        helper(root, null, null);
+        return sum;
     }
 }
-
-// https://leetcode.com/problems/sum-of-nodes-with-even-valued-grandparent/
