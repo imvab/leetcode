@@ -1,37 +1,25 @@
-import java.util.Stack;
+class Solution {
+    // Function to find the next greater element for each element of the array.
+    public static long[] nextLargerElement(long[] arr, int n) {
+        Stack<Long> st = new Stack<>();
+        long[] result = new long[n];
 
-public class App {
+        // result[n - 1] = -1;
+        // st.push(arr[n - 1]);
 
-    public static int[] nextGreater(int[] input) {
-        int n = input.length;
-        int[] output = new int[n];
-        output[n - 1] = -1;
-
-        Stack<Integer> st = new Stack<Integer>();
-        st.push(input[n - 1]);
-
-        for (int i = n - 2; i >= 0; i--) {
-            while (!st.isEmpty() && st.peek() < input[i]) {
+        for (int i = n - 1; i >= 0; i--) { // from second last to first
+            while (!st.isEmpty() && st.peek() < arr[i]) {
                 st.pop();
             }
             if (st.isEmpty()) {
-                output[i] = -1;
-                st.push(input[i]);
+                result[i] = -1;
+                st.push(arr[i]);
             } else {
-                output[i] = st.peek();
-                st.push(input[i]);
+                result[i] = st.peek();
+                st.push(arr[i]);
             }
         }
-        return output;
-    }
-
-    public static void main(String[] args) {
-        int[] arr = { 6, 8, 0, 1, 3 };
-        int[] op = nextGreater(arr);
-        for (int i = 0; i < op.length; i++) {
-            System.out.print(op[i] + " ");
-        }
-        System.out.println();
+        return result;
     }
 }
 
