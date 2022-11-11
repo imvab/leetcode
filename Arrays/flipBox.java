@@ -1,32 +1,27 @@
 class Solution {
     public char[][] rotateTheBox(char[][] box) {
-        
-        char[][] flippedBox = new char[box[0].length][box.length];
-        
-        for(int i = 0; i < box.length; i++) {
-            
-            int crystals = 0;
-            int lastEmpty = flippedBox.length-1;
-            
-            for(int j = flippedBox.length-1; j > -1; j--) {
-                
-                flippedBox[j][flippedBox[0].length-1-i]  = '.';
+        int m = box.length;
+        int n = box[0].length;
+        char[][] res = new char[n][m];
 
-                if(box[i][j] == '#') {
-                    crystals++;
-                    
-                    flippedBox[lastEmpty][flippedBox[0].length-1-i] = '#';
-                    lastEmpty--;
-                    
-                } else if(box[i][j] == '*') {
-                    
-                    lastEmpty = j-1;
-                    flippedBox[j][flippedBox[0].length-1-i] = '*';
-                }                 
+        for (int i = 0; i < m; i++) {
+            int bottomMost = n - 1;
+
+            for (int j = n - 1; j >= 0; j--) {
+                res[j][m - 1 - i] = '.';
+
+                if (box[i][j] == '#') {
+                    // there is a stone
+                    res[bottomMost][m - 1 - i] = '#';
+                    bottomMost--;
+                } else if (box[i][j] == '*') {
+                    // this cell is blocked
+                    res[j][m - 1 - i] = '*';
+                    bottomMost = j - 1;
+                }
             }
         }
-        
-        return flippedBox;
+        return res;
     }
 }
 
