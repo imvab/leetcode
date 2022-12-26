@@ -1,4 +1,32 @@
-class Solution {
+class Solution 
+
+    static int countSetBits(int n) {
+        int count = 0;
+        while (n > 0) {
+            count += n & 1;
+            n >>= 1;
+        }
+        return count;
+    }
+
+    public int[] sortByBits(int[] arr) {
+        Integer[] a = new Integer[arr.length];
+        for (int i = 0; i < arr.length; i++)
+            a[i] = Integer.valueOf(arr[i]);
+        Arrays.sort(a, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer x, Integer y) {
+                if (Integer.bitCount(x) - Integer.bitCount(y) == 0) {
+                    return x - y;
+                } else {
+                    return Integer.bitCount(x) - Integer.bitCount(y);
+                }
+            }
+        });
+        for (int i = 0; i < arr.length; i++)
+            arr[i] = a[i];
+        return arr;
+    }
 
     public int[] sortByBits(int[] arr) {
         mergeSort(arr, 0, arr.length - 1);
