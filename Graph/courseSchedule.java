@@ -1,44 +1,40 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        // if there are no dependencies between courses return true
-        if (prerequisites.length == 0)
-            return true;
+        HashMap<Integer, ArrayList<Integer>> g = new HashMap<Integer, ArrayList<Integer>>();
+        int[] noDep = new int[numCourses];
 
-        int[] inDegree = new int[numCourses];
-        Map<Integer, List<Integer>> adjMap = new HashMap<>();
+        for (int i = 0; i < numCourses; i++)
+            g.put(i, new ArrayList<Integer>());
 
-        // populate the adjecency map with empty lists
-        for (int i = 0; i < numCourses; i++) {
-            adjMap.put(i, new ArrayList<>());
-        }
-
-        // calculate in dgree and alos populate the adj list
         for (int i = 0; i < prerequisites.length; i++) {
-            inDegree[prerequisites[i][0]]++;
-            adjMap.get(prerequisites[i][1]).add(prerequisites[i][0]);
+            g.get(prerequisites[i][1]).add(prerequisites[i][0]);
+            noDep[prerequisites[i][0]]++;
         }
 
-        LinkedList<Integer> stack = new LinkedList<>();
-        // add courses with no dependency to stack
+        Stack<Integer> st = new Stack<Integer>();
+
         for (int i = 0; i < numCourses; i++) {
-            if (inDegree[i] == 0)
-                stack.add(i);
+            if (noDep[i] == 0)
+                st.push(i);
         }
 
-        int count = 0;
-        // iterate through stack
-        while (!stack.isEmpty()) {
-            int curr = stack.pop();
-            count++;
-            for (int course : adjMap.get(curr)) {
-                // reduce the dependency count of the course dependent on current course
-                inDegree[course]--;
-                // if there are no dependency on dependent course , add it to stack
-                if (inDegree[course] == 0)
-                    stack.add(course);
+        while (!st.isEmpty()) {
+            int curr = st.pop(); // done
+
+            for (int c : g.get(curr)) {
+                noDep[c]--;
+
+                if (noDep[c] == 0)
+                    st.add(c);
             }
         }
-        return count == numCourses;
 
+        for (int i = 0; i < noDep.length; i++)
+            if (noDep[i] > 0)
+                return false;
+
+        return true;
     }
 }
+
+// https://leetcode.com/problems/course-schedule/description/
