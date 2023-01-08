@@ -1,66 +1,52 @@
 class Solution {
-    public static void remove(LinkedList ll, int toRemove) {
+    static ArrayList<Integer> leaders(int arr[], int n) {
+        // Write your code here
+        ArrayList<Integer> array = new ArrayList<Integer>();
+        int current_leader = arr[n - 1];
+        array.add(arr[n - 1]);
+        for (int i = n - 2; i >= 0; i--) {
+            if (current_leader <= arr[i]) {
+                current_leader = arr[i];
+                array.add(current_leader);
+            }
+        }
+        Collections.reverse(array);
 
-        if (ll.head == null)
-            return;
-        if (toRemove == 0) {
-            ll.head = ll.head.next;
-            return;
+        return (array);
+    }
+}
+
+class Accio {
+    public static void countCharacter(String str) {
+        int upper = 0, lower = 0, number = 0, special = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            if (ch >= 'A' && ch <= 'Z')
+                upper++;
+            else if (ch >= 'a' && ch <= 'z')
+                lower++;
+            else if (ch >= '0' && ch <= '9')
+                number++;
         }
-        Node curr = ll.head;
-        for (int i = 0; i < toRemove - 1; i++) {
-            curr = curr.next;
-        }
-        curr.next = curr.next.next;
+
+        System.out.println(upper + " " + lower + " " + number);
     }
 }
 
 class Solution {
-    static Node insert(Node head, int n, int pos, int val) { // Write your code here.
-        Node newNode = new Node(val);
 
-        if (pos == 0) {
-            newNode.next = head;
-            head = newNode;
-            return head;
+    public static int fourbinacci(int n) {
+        if (n == 1) {
+            return 1;
+        } else if (n == 2) {
+            return 1;
+        } else if (n == 3) {
+            return 1;
+        } else if (n == 4) {
+            return 1;
+        } else {
+            return fourbinacci(n - 1) + fourbinacci(n - 2) + fourbinacci(n - 3) + fourbinacci(n - 4);
         }
-        Node temp = head;
-        while (temp.next != null) {
-            temp = temp.next;
-        }
-        if (pos == n) {
-            temp.next = newNode;
-            return head;
-        }
-        temp = head;
-        for (int i = 0; i < pos - 1; i++) {
-            temp = temp.next;
-        }
-        newNode.next = temp.next;
-        temp.next = newNode;
-        return head;
-    }
-}
-
-class Solution {
-    static Node midpointOfLinkedList(Node head) {
-        Node slow = head;
-        Node fast = head;
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-        return slow;
-    }
-
-}
-
-class Solution {
-    void deleteNode(Node node) {
-        // Your code here
-        Node nextNode = node.next;
-        node.data = nextNode.data;
-        node.next = nextNode.next;
-        nextNode.next = null;
     }
 }
