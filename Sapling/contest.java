@@ -1,96 +1,64 @@
 class Solution {
-    static ArrayList<Integer> leaders(int arr[], int n) {
-        // Write your code here
-        ArrayList<Integer> array = new ArrayList<Integer>();
-        int current_leader = arr[n - 1];
-        array.add(arr[n - 1]);
-        for (int i = n - 2; i >= 0; i--) {
-            if (current_leader <= arr[i]) {
-                current_leader = arr[i];
-                array.add(current_leader);
+    public static void starPyramid(int n) {
+
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                System.out.print(" ");
             }
-        }
-        Collections.reverse(array);
-
-        return (array);
-    }
-}
-
-class Solution {
-    static int findMinLength(String strings[], int n) {
-        int min = strings[0].length();
-        for (int i = 1; i < n; i++) {
-            if (strings[i].length() < min) {
-                min = strings[i].length();
-            }
-        }
-        return (min);
-    }
-
-    public static String longestCommonStarting(String[] strings, int n) {
-        // Write your code here
-        int minlen = findMinLength(strings, n);
-        String result = "";
-        char current;
-
-        for (int i = 0; i < minlen; i++) {
-            current = strings[0].charAt(i);
-            for (int j = 1; j < n; j++) {
-                if (strings[j].charAt(i) != current) {
-                    if (result.length() == 0)
-                        result = "-1";
-                    return result;
+            for (int j = 0; j < 2 * i + 1; j++) {
+                if (j == 0 || j == 2 * i) {
+                    System.out.print("*");
+                } else {
+                    System.out.print(" ");
                 }
             }
-            result += (current);
+            System.out.println();
         }
-        if (result.length() == 0)
-            result = "-1";
-        return (result);
+        for (int i = 0; i < n; i++) {
+            System.out.print("* ");
+        }
+
     }
 }
 
 class Solution {
-
-    public static void reverse(char[] a) {
-        int i, n = a.length;
-        char t;
-        for (i = 0; i < n / 2; i++) {
-            t = a[i];
-            a[i] = a[n - i - 1];
-            a[n - i - 1] = t;
+    long birthdayGift(int[] A, int[] B, int N) {
+        // Your code here
+        long sum = 0;
+        Arrays.sort(A);
+        Arrays.sort(B);
+        for (int i = 0; i < N; i++) {
+            sum += Math.abs(A[i] - B[i]);
         }
+        return sum;
+    }
+}
+
+class Solution {
+    static boolean check(int n) {
+        if (n == 1 || n == 7 || n == 10)
+            return true;
+        if (n < 10)
+            return false;
+
+        int num = 0, temp = 0;
+        while (n != 0) {
+            temp = (n % 10);
+            num += temp * temp;
+            n /= 10;
+        }
+        return check(num);
     }
 
-    public String AliceLikesItEven(String S) {
-        int MAX = 10;
-        String maxEven = "";
-        int len = S.length();
-        int[] freq = new int[MAX];
-        int i, minEvenDigit = MAX;
-        for (i = 0; i < len; i++) {
-            int digit = S.charAt(i) - '0';
-            freq[digit]++;
-            if (digit % 2 == 0)
-                minEvenDigit = Math.min(digit, minEvenDigit);
+    static int solve(int n) {
+        // code here
+        ++n;
+        while (true) {
+            if (check(n))
+                return n;
+            else
+                ++n;
+        }
 
-        }
-        if (minEvenDigit == MAX) {
-            char tempArray[] = S.toCharArray();
-            Arrays.sort(tempArray);
-            reverse(tempArray);
-            return new String(tempArray);
-        }
-        freq[minEvenDigit]--;
-        i = MAX - 1;
-        while (i >= 0) {
-            if (freq[i] > 0) {
-                maxEven = maxEven + i;
-                freq[i]--;
-            } else
-                i--;
-        }
-        maxEven = maxEven + minEvenDigit;
-        return maxEven;
     }
 }
