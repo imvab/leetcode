@@ -1,64 +1,82 @@
-class Solution {
-    public static void starPyramid(int n) {
-
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                System.out.print(" ");
+class Main {
+    public static void main(String args[]) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        for (int i = 1; i <= n; i++) {
+            for (int j = i; j < 2 * i; j++) {
+                System.out.print(j + " ");
             }
-            for (int j = 0; j < 2 * i + 1; j++) {
-                if (j == 0 || j == 2 * i) {
-                    System.out.print("*");
-                } else {
-                    System.out.print(" ");
-                }
-            }
-            System.out.println();
+            System.out.println("");
         }
+
+    }
+}
+
+class Solution {
+    static boolean savePerson(int n, int[] vaccinePigment, int[] personPigment) {
+        // Write your code here
+        Arrays.sort(personPigment);
+        Arrays.sort(vaccinePigment);
         for (int i = 0; i < n; i++) {
-            System.out.print("* ");
+            if (vaccinePigment[i] <= personPigment[i]) {
+                return false;
+            }
         }
-
+        return true;
     }
 }
 
-class Solution {
-    long birthdayGift(int[] A, int[] B, int N) {
-        // Your code here
-        long sum = 0;
-        Arrays.sort(A);
-        Arrays.sort(B);
-        for (int i = 0; i < N; i++) {
-            sum += Math.abs(A[i] - B[i]);
-        }
-        return sum;
-    }
-}
+public class Main {
 
-class Solution {
-    static boolean check(int n) {
-        if (n == 1 || n == 7 || n == 10)
-            return true;
-        if (n < 10)
-            return false;
-
-        int num = 0, temp = 0;
-        while (n != 0) {
-            temp = (n % 10);
-            num += temp * temp;
-            n /= 10;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int m = sc.nextInt(), n = sc.nextInt();
+        int[][] grid = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                grid[i][j] = sc.nextInt();
+            }
         }
-        return check(num);
+        int x = sc.nextInt();
+        System.out.println(minOperations(grid, x));
+        sc.close();
     }
 
-    static int solve(int n) {
-        // code here
-        ++n;
-        while (true) {
-            if (check(n))
-                return n;
-            else
-                ++n;
+    static int f(int[] v, int x, int val) {
+        int s = 0;
+        int n = v.length;
+        for (int i = 0; i < n; i++) {
+            s += Math.abs(v[i] - val);
         }
+        return s / x;
+    }
 
+    static int minOperations(int[][] grid, int x) {
+        int[] v = new int[grid.length * grid[0].length];
+        int row = grid.length;
+        int col = grid[0].length;
+        int k = 0;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                v[k++] = grid[i][j];
+            }
+        }
+        Arrays.sort(v);
+        int n = v.length;
+        for (int i = 1; i < n; i++) {
+            if ((v[i] - v[i - 1]) % x != 0)
+                return -1;
+        }
+        int idx = n / 2;
+        if (n % 2 == 0) {
+            int val1 = v[idx];
+            int val2 = v[idx - 1];
+            int ans1 = f(v, x, val1);
+            int ans2 = f(v, x, val2);
+            return Math.min(ans1, ans2);
+        } else {
+            int val1 = v[idx];
+            return f(v, x, val1);
+        }
     }
 }
