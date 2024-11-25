@@ -1,4 +1,4 @@
-public class App {
+class App {
 
     public static void djikstra(int[][] mat) {
         int[] res = new int[mat.length];

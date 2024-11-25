@@ -19,4 +19,4 @@ class Solution:
         pre.next = reverse
         return dummy.next
 
-// https://leetcode.com/problems/reverse-linked-list-ii/description/
+# https://leetcode.com/problems/reverse-linked-list-ii/description/
